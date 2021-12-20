@@ -11,8 +11,9 @@
 (new button% [parent frame]
              [label "Load a GPX file"]
              ; Callback procedure for a button click:
-             [callback (lambda (button event)
-                         (send msg set-label "Not yet implemented."))])
+             [callback (lambda (button event) (get-file "Read GPX file" frame #f #f "gpx" '()
+                                  '(("GPX Files" "*.gpx") ("Any" "*.*"))))])
  
 ; Show the frame by calling its show method
 (send frame show #t)
+
