@@ -20,3 +20,9 @@ Start to put views into child windows.
 See if we can promote child windows into top level.
 
 Display track in OpenGL window (see RobotMaze).
+
+Need: equivalent of elm-geometry, some of which is in Pict3D.
+
+Use Pict2D for plan.
+
+Some graphic attributes to live at window level (e.g. terrain).

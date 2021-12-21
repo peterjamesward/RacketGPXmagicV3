@@ -1,7 +1,5 @@
 #lang racket/gui
 
-(require xml)
-
 ; Make a frame by instantiating the frame% class
 (define frame (new frame% [label "GPXmagic v3"]))
  
@@ -15,10 +13,7 @@
   (define gpx-file-name 
     (some-system-path->string
       (file-name-from-path gpx-file-path)))
-  (define as-xml (xml->xexpr (document-element
-               (read-xml gpx-file-path))))
   (send msg set-label gpx-file-name))
-
   
   ; Make a button in the frame
 (new button% [parent frame]
