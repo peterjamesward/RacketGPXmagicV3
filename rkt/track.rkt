@@ -7,4 +7,4 @@
 
 (struct trackpoint (longitude latitude altitude))
 
-(struct track (filename trackname trackpoints))
+(struct track (filename trackname trackpoints error-message))
