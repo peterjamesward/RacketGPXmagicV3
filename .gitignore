@@ -8,3 +8,6 @@ rkt/compiled/drracket/errortrace/import-from-gpx_rkt.zo
 rkt/compiled/drracket/errortrace/import-from-gpx_rkt.dep
 *.zo
 *.zo
+*.dep
+*.dep
+*.zo
