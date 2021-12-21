@@ -1,0 +1,9 @@
+#lang racket/gui
+
+;; Utils for track and track points.
+
+(require "track.rkt")
+
+;; Map widget requires a vector of latitude, longitude.
+(define (trackpoint-as-vector tp)
+  (vector (trackpoint-latitude tp) (trackpoint-longitude tp)))

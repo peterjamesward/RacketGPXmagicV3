@@ -1,14 +1,17 @@
 #lang racket/gui
 
-(require "track.rkt"
+(require map-widget
+         "track.rkt"
+         "track-utils.rkt"
          "import-from-gpx.rkt")
 
 ; Make a frame by instantiating the frame% class
-(define frame (new frame% [label "GPXmagic v3"]))
+(define frame (new frame% [label "GPXmagic v3"] [width 600] [height 500]))
 
-; Make a static text message in the frame
+; Put some controls in the frame.
 (define show-track-name (new message% [parent frame] [label "No track loaded."]))
 (define show-track-length (new gauge% [parent frame] [label "Points"] [range 6]))
+(define my-map (new map-widget% [parent frame]))
 
 (define (read-gpx-file button event)
   (define gpx-file-path
@@ -21,7 +24,8 @@
           (send show-track-name set-label (track-trackname my-track))
           (send show-track-length
                 set-value
-                (exact-round (log (length (track-trackpoints my-track)) 10)))))))
+                (exact-round (log (length (track-trackpoints my-track)) 10)))
+          (send my-map add-track (track-as-vectors my-track) 'track)))))
 
 
 ; Make a button in the frame
