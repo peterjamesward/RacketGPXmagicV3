@@ -11,3 +11,5 @@ rkt/compiled/drracket/errortrace/import-from-gpx_rkt.dep
 *.dep
 *.dep
 *.zo
+rkt/compiled/drracket/errortrace/import-from-gpx_rkt.dep
+rkt/compiled/drracket/errortrace/import-from-gpx_rkt.zo
