@@ -8,22 +8,21 @@ Start from scratch but cherry-pick small things from ActivityLog2.
 
 # TODO
 
+Record structure for GPX file (Track) and points (TrackPoint).
+XML parser.
+XML -> structure for GPX tags.
+(Could at this stage, do a point cloud.)
 Post-process for distance, gradient etc.
-
-Profile view under map.
-
-Display track in OpenGL window (see RobotMaze).
+Take part of the ActivityLog2 map and profile dialog and move into our top level.
 
 Start to put views into child windows.
 
 See if we can promote child windows into top level.
+
+Display track in OpenGL window (see RobotMaze).
 
 Need: equivalent of elm-geometry, some of which is in Pict3D.
 
 Use Pict2D for plan.
 
 Some graphic attributes to live at window level (e.g. terrain).
-
-# DONE
-
-GPX -> Map.
