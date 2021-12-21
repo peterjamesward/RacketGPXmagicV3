@@ -25,7 +25,10 @@
           (send show-track-length
                 set-value
                 (exact-round (log (length (track-trackpoints my-track)) 10)))
-          (send my-map add-track (track-as-vectors my-track) 'track)))))
+          (send my-map clear)
+          (send my-map add-track (track-as-vectors my-track) 'track)
+          (send my-map resize-to-fit 'track)
+          (send my-map center-map)))))
 
 
 ; Make a button in the frame
