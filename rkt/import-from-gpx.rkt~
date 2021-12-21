@@ -1,0 +1,6 @@
+#lang racket
+
+(provide import-from-gpx)
+
+(define (import-from-gpx file-path)
+  )
