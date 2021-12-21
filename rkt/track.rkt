@@ -1,6 +1,7 @@
 #lang racket
 
-(provide track trackpoint)
+(provide (struct-out track)
+         (struct-out trackpoint))
 
 ;; Define our pervasive types for general use.
 

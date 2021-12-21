@@ -1,7 +1,6 @@
 #lang racket/gui
 
-(require xml
-         "track.rkt"
+(require "track.rkt"
          "import-from-gpx.rkt")
 
 ; Make a frame by instantiating the frame% class
@@ -14,8 +13,8 @@
   (define gpx-file-path
     (get-file "Read GPX file" frame #f #f "gpx" '() '(("GPX Files" "*.gpx") ("Any" "*.*"))))
   (when ((or/c path-string? path-for-some-system?) gpx-file-path)
-
-    (send msg set-label gpx-file-name)))
+    (define my-track (import-from-gpx gpx-file-path))
+    (send msg set-label (track-filename my-track))))
 
 
 ; Make a button in the frame
