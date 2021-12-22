@@ -1,6 +1,7 @@
 #lang racket/gui
 
 (require map-widget
+         pict3d
          "map-shim.rkt"
          "track.rkt"
          "track-deriver.rkt"
@@ -11,12 +12,29 @@
 (define map-frame (new frame% [label "GPXmagic v3"] [width 600] [height 500]))
 (define opengl-frame (new frame% [label "GPXmagic v3"] [width 600] [height 500]))
 
-; Put some controls in the frame.
+; Put some controls in the frames.
 (define show-track-name (new message% [parent file-frame] [label "No track loaded."]))
 (define show-track-length (new gauge% [parent file-frame] [label "Complexity"] [range 7]))
+
+; The Map, please
 (define my-map (new map-widget% [parent map-frame]))
 
+; The 3D view
+(define my-3d
+  (new pict3d-canvas%
+       [parent opengl-frame]
+       [pict3d (combine (sphere origin 1/2) (light (pos 0 1 1)))]))
+
 (define global-track #f)
+
+(define (make-sphere point)
+  (sphere
+   (pos (euclidean-trackpoint-x point) (euclidean-trackpoint-y point) (euclidean-trackpoint-z point))
+   1))
+
+(define (euclidean->picture track)
+  (let ([point-cloud (map make-sphere (track-info-euclidean-trackpoints track))])
+    (combine point-cloud (light (pos 1000 1000 1000)))))
 
 (define (read-gpx-file button event)
   (define gpx-file-path
@@ -32,7 +50,9 @@
                 set-value
                 (exact-round (log (length (track-trackpoints my-track)) 10)))
           (show-track-on-map my-map my-track)
-          (send map-frame show #t)))))
+          (send map-frame show #t)
+          (send my-3d set-pict3d (euclidean->picture global-track))
+          (send opengl-frame show #t)))))
 
 
 ; Make a button in the frame

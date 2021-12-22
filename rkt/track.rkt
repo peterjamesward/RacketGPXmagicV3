@@ -5,7 +5,7 @@
          (struct-out trackpoint)
          (struct-out euclidean-trackpoint)
          (struct-out segment)
-         (struct-out vertex))
+         (struct-out inflexion))
 
 ;; Define our pervasive types for general use.
 
@@ -51,7 +51,7 @@
          earth-length ; float metres
          ))
 
-(struct vertex
+(struct inflexion
         (preceded-by ; segment
          followed-by ; segment
          direction-change ; float radians
