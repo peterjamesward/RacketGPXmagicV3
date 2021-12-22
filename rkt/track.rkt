@@ -1,10 +1,55 @@
 #lang racket
 
 (provide (struct-out track)
-         (struct-out trackpoint))
+         (struct-out trackpoint)
+         (struct-out euclidean-trackpoint)
+         (struct-out segment)
+         (struct-out vertex))
 
 ;; Define our pervasive types for general use.
 
-(struct trackpoint (longitude latitude altitude))
+(struct trackpoint
+        (longitude ; float degrees
+         latitude ; float degrees
+         altitude ; float metres
+         ))
 
-(struct track (filename trackname trackpoints error-message))
+(struct euclidean-trackpoint
+        (based-on ; trackpoint
+         x ; float metres from start point
+         y ; ditto
+         z ; ditto
+         ))
+
+(struct track
+        (filename ; string
+         trackname ; path
+         trackpoints ; list trackpoint
+         error-message ; string
+         ))
+
+;; Track with all the derivations
+(struct track*
+        (filename ; string
+         trackname ; path
+         error-message ; string))
+         centre-lonlat ; pair of float degrees
+         trackpoints ; list trackpoint
+         euclidean-trackpoints ; like it says
+         segments ; list segment
+         vertices ; list vertex
+         ))
+
+(struct segment
+        (start-at ; trackpoint
+         end-at ; trackpoint
+         road-vector ; vector3d metres
+         earth-length ; float metres
+         ))
+
+(struct vertex
+        (preceded-by ; segment
+         followed-by ; segment
+         direction-change ; float radians
+         gradient-change ; float gradient (-1 .. +1)
+         ))
