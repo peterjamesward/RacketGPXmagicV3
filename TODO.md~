@@ -1,4 +1,11 @@
 
+# APPROACH
+
+Start from scratch but cherry-pick small things from ActivityLog2.
+> Avoid wholesale copy as it's hard to extract the irrelevant stuff,
+> and it's not my style,
+> and I need to be able to understand it.
+
 # TODO
 
 Post-process for distance, gradient etc.
@@ -6,10 +13,6 @@ Post-process for distance, gradient etc.
 Profile view under map. (Use my colours.)
 
 Display track in OpenGL window (see RobotMaze).
-> Camera position
-> Background
-> Pan and Zoom
-> Track &c.
 
 Start to put views into child windows. (Switch between floating and docked, somehow).
 

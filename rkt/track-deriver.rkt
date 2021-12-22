@@ -45,15 +45,3 @@
               segments
               vertices))
 
-
-;        (filename ; string
-;         trackname ; path
-;         error-message ; string))
-;         earth-bounds ; vector [ min lon, max lon, min lat, max lat ]
-;         reference-lonlat ; pair of float degrees, used to translate between Euclidean and Earth coordinates.
-;         trackpoints ; list trackpoint
-;         euclidean-trackpoints ; like it says
-;         euclidean-bounds ; vector [ min x, max x, min y, max y, min z, max z ]
-;         segments ; list segment
-;         vertices ; list vertex
-;         ))

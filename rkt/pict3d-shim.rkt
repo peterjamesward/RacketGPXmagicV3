@@ -8,7 +8,7 @@
 (define (make-sphere point)
   (sphere
    (pos (euclidean-trackpoint-x point) (euclidean-trackpoint-y point) (euclidean-trackpoint-z point))
-   1))
+   1.0))
 
 (define (euclidean->picture track)
   (let ([point-cloud (map make-sphere (track-info-euclidean-trackpoints track))])
