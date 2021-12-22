@@ -3,6 +3,7 @@
 (require map-widget
          pict3d
          "map-shim.rkt"
+         "pict3d-shim.rkt"
          "track.rkt"
          "track-deriver.rkt"
          "import-from-gpx.rkt")
@@ -27,15 +28,6 @@
 
 (define global-track #f)
 
-(define (make-sphere point)
-  (sphere
-   (pos (euclidean-trackpoint-x point) (euclidean-trackpoint-y point) (euclidean-trackpoint-z point))
-   1))
-
-(define (euclidean->picture track)
-  (let ([point-cloud (map make-sphere (track-info-euclidean-trackpoints track))])
-    (combine point-cloud (light (pos 1000 1000 1000)))))
-
 (define (read-gpx-file button event)
   (define gpx-file-path
     (get-file "Read GPX file" map-frame #f #f "gpx" '() '(("GPX Files" "*.gpx") ("Any" "*.*"))))
@@ -51,7 +43,7 @@
                 (exact-round (log (length (track-trackpoints my-track)) 10)))
           (show-track-on-map my-map my-track)
           (send map-frame show #t)
-          (send my-3d set-pict3d (euclidean->picture global-track))
+          (show-3d my-3d global-track)
           (send opengl-frame show #t)))))
 
 
