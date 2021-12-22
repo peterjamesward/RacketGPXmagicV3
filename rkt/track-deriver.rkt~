@@ -1,0 +1,10 @@
+#lang racket/gui
+
+(provide derive-full-track-info)
+
+;; Take a lon, lat, alt track from GPX, convert to Euclidean space, derive some frequently used stuff.
+(define (derive-full-track-info raw-track)
+  (define earthly-bounds
+    ; Bounding box vector min lon, max lon, min lat, max lat, min alt, max alt; not the same as map chappy.
+    (vector
+     (minimum 

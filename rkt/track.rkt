@@ -1,6 +1,7 @@
 #lang racket
 
 (provide (struct-out track)
+         (struct-out track-info)
          (struct-out trackpoint)
          (struct-out euclidean-trackpoint)
          (struct-out segment)
@@ -29,15 +30,15 @@
          ))
 
 ;; Track with all the derivations
-(struct track*
+(struct track-info
         (filename ; string
          trackname ; path
          error-message ; string))
          earth-bounds ; vector [ min lon, max lon, min lat, max lat ]
-         euclidean-bounds ; vector [ min x, max x, min y, max y, min z, max z ]
-         centre-lonlat ; pair of float degrees
+         reference-lonlat ; pair of float degrees, used to translate between Euclidean and Earth coordinates.
          trackpoints ; list trackpoint
          euclidean-trackpoints ; like it says
+         euclidean-bounds ; vector [ min x, max x, min y, max y, min z, max z ]
          segments ; list segment
          vertices ; list vertex
          ))

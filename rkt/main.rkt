@@ -3,7 +3,7 @@
 (require map-widget
          "map-shim.rkt"
          "track.rkt"
-         "track-utils.rkt"
+         "track-deriver.rkt"
          "import-from-gpx.rkt")
 
 ; Make frames, worry about layout later.
@@ -16,6 +16,8 @@
 (define show-track-length (new gauge% [parent file-frame] [label "Complexity"] [range 7]))
 (define my-map (new map-widget% [parent map-frame]))
 
+(define global-track #f)
+
 (define (read-gpx-file button event)
   (define gpx-file-path
     (get-file "Read GPX file" map-frame #f #f "gpx" '() '(("GPX Files" "*.gpx") ("Any" "*.*"))))
@@ -23,12 +25,14 @@
     (define my-track (import-from-gpx gpx-file-path))
     (if (string? (track-error-message my-track))
         (send show-track-name set-label "Problem with file")
-        (send show-track-name set-label (track-trackname my-track))
-        (send show-track-length
-              set-value
-              (exact-round (log (length (track-trackpoints my-track)) 10)))
-        (show-track-on-map my-map my-track)
-        (send map-frame show #t))))
+        (begin
+          (set! global-track (derive-full-track-info my-track))
+          (send show-track-name set-label (track-trackname my-track))
+          (send show-track-length
+                set-value
+                (exact-round (log (length (track-trackpoints my-track)) 10)))
+          (show-track-on-map my-map my-track)
+          (send map-frame show #t)))))
 
 
 ; Make a button in the frame
