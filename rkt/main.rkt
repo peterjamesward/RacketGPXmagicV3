@@ -1,6 +1,7 @@
 #lang racket/gui
 
 (require map-widget
+         "map-shim.rkt"
          "track.rkt"
          "track-utils.rkt"
          "import-from-gpx.rkt")
@@ -25,11 +26,7 @@
           (send show-track-length
                 set-value
                 (exact-round (log (length (track-trackpoints my-track)) 10)))
-          (send my-map clear)
-          (send my-map add-track vectorised-track 'track)
-          (send my-map add-marker (first vectorised-track) "orange" +1 (make-color 255 120 0))
-          (send my-map resize-to-fit 'track)
-          (send my-map center-map)))))
+         (show-track-on-map my-map my-track)))))
 
 
 ; Make a button in the frame

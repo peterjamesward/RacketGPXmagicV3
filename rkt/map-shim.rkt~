@@ -1,0 +1,11 @@
+#lang racket/gui
+
+(provide show-track-on-map)
+
+(define (show-track-on-map track)
+  (let ([vectorised-track (track-as-vectors track)])
+    (send my-map clear)
+    (send my-map add-track vectorised-track 'track)
+    (send my-map add-marker (first vectorised-track) "orange" +1 (make-color 255 120 0))
+    (send my-map resize-to-fit 'track)
+    (send my-map center-map)))
