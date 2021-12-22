@@ -6,14 +6,14 @@
          "track-utils.rkt"
          "import-from-gpx.rkt")
 
-; Make a frame by instantiating the frame% class
+; Make frames, worry about layout later.
 (define file-frame (new frame% [label "GPXmagic v3"] [width 600] [height 100]))
 (define map-frame (new frame% [label "GPXmagic v3"] [width 600] [height 500]))
 (define opengl-frame (new frame% [label "GPXmagic v3"] [width 600] [height 500]))
 
 ; Put some controls in the frame.
 (define show-track-name (new message% [parent file-frame] [label "No track loaded."]))
-(define show-track-length (new gauge% [parent file-frame] [label "Points"] [range 6]))
+(define show-track-length (new gauge% [parent file-frame] [label "Complexity"] [range 7]))
 (define my-map (new map-widget% [parent map-frame]))
 
 (define (read-gpx-file button event)
@@ -23,13 +23,12 @@
     (define my-track (import-from-gpx gpx-file-path))
     (if (string? (track-error-message my-track))
         (send show-track-name set-label "Problem with file")
-        (let ([vectorised-track (track-as-vectors my-track)])
-          (send show-track-name set-label (track-trackname my-track))
-          (send show-track-length
-                set-value
-                (exact-round (log (length (track-trackpoints my-track)) 10)))
-          (show-track-on-map my-map my-track)
-          (send map-frame show #t)))))
+        (send show-track-name set-label (track-trackname my-track))
+        (send show-track-length
+              set-value
+              (exact-round (log (length (track-trackpoints my-track)) 10)))
+        (show-track-on-map my-map my-track)
+        (send map-frame show #t))))
 
 
 ; Make a button in the frame

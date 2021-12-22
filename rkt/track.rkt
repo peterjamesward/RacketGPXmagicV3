@@ -33,6 +33,8 @@
         (filename ; string
          trackname ; path
          error-message ; string))
+         earth-bounds ; vector [ min lon, max lon, min lat, max lat ]
+         euclidean-bounds ; vector [ min x, max x, min y, max y, min z, max z ]
          centre-lonlat ; pair of float degrees
          trackpoints ; list trackpoint
          euclidean-trackpoints ; like it says
@@ -44,6 +46,7 @@
         (start-at ; trackpoint
          end-at ; trackpoint
          road-vector ; vector3d metres
+         gradient ; float %
          earth-length ; float metres
          ))
 
@@ -51,5 +54,5 @@
         (preceded-by ; segment
          followed-by ; segment
          direction-change ; float radians
-         gradient-change ; float gradient (-1 .. +1)
+         gradient-change ; float %
          ))
