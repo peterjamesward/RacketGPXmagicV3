@@ -35,10 +35,11 @@
       ; Because mouse wheel comes in like this.
       (let ([parent (send this get-parent)] [which-key (send event get-key-code)])
         (cond
-          [(equal? which-key 'wheel-up) (set! camera-distance (+ camera-distance 100))]
-          [(equal? which-key 'wheel-down) (set! camera-distance (- camera-distance 100))]
+          [(equal? which-key 'wheel-up) (set! camera-distance (min 1000 (* camera-distance 1.1)))]
+          [(equal? which-key 'wheel-down) (set! camera-distance (max 2 (* camera-distance 0.9)))]
           [#t (send parent set-label "other")])
-        (send this camera-from-azimuth-elevation)))
+        (send this camera-from-azimuth-elevation)
+        #t))
 
     (define/public (update-picture track)
       (let ([new-pict (euclidean->picture track)])
@@ -48,7 +49,11 @@
     (super-new)))
 
 (define (my-3d container)
-  (new my-canvas% [parent container] [pict3d (combine (sphere origin 1/2) (light (pos 0 1 1)))]))
+  (let ([the-canvas (new my-canvas%
+                         [parent container]
+                         [pict3d (combine (sphere origin 1/2) (light (pos 0 1 1)))])])
+    (send the-canvas wheel-event-mode 'one)
+    the-canvas))
 
 (define (show-point point)
   (cube
