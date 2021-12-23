@@ -20,18 +20,10 @@
 ; The Map, please
 (define my-map (new map-widget% [parent map-frame]))
 
-; Mouse events on 3D
-(define (my-event-handler some-event)
-  #f)
-
 ; The 3D view
-(define my-3d
-  (new (class pict3d-canvas%
-         (define/override (on-event any-event) (my-event-handler any-event))
-         (super-new [parent opengl-frame]
-                    [pict3d (combine (sphere origin 1/2) (light (pos 0 1 1)))]))))
+(define the-3d-picture (my-3d opengl-frame))
 
-
+; Assuming only one track open, for now.
 (define global-track #f)
 
 (define (read-gpx-file button event)
@@ -49,8 +41,8 @@
                 (exact-round (log (length (track-trackpoints my-track)) 10)))
           (show-track-on-map my-map my-track)
           (send map-frame show #t)
-          (show-3d my-3d global-track)
-          (send opengl-frame show #t)))))
+          (send opengl-frame show #t)
+          (show-3d the-3d-picture global-track)))))
 
 
 ; Make a button in the frame
