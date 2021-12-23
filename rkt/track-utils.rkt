@@ -8,7 +8,8 @@
 (provide trackpoint-as-vector
          track-as-vectors
          earth->euclidean
-         euclidean->earth)
+         euclidean->earth
+         tabulate)
 
 ;; Map widget requires a vector of latitude, longitude.
 (define (trackpoint-as-vector tp)
@@ -37,3 +38,11 @@
                        (cos (degrees->radians ref-lat))))]
          [pt-lat (+ ref-lat (/ (euclidean-trackpoint-y euclidean-point) metres-per-degree))])
     (trackpoint pt-lon pt-lat (euclidean-trackpoint-z euclidean-point))))
+
+(define (tabulate euclideans)
+  (define (print-euclidean euclidean)
+    (display (format " ~a ~a ~a \n"
+                     (euclidean-trackpoint-x euclidean)
+                     (euclidean-trackpoint-y euclidean)
+                     (euclidean-trackpoint-z euclidean))))
+  (map print-euclidean euclideans))

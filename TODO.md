@@ -3,6 +3,8 @@
 
 Post-process for distance, gradient etc.
 
+Tabular view of Euclidean, as there's something screwy there.
+
 Profile view under map. (Use my colours.)
 
 Display track in OpenGL window (see RobotMaze).
@@ -11,7 +13,8 @@ Display track in OpenGL window (see RobotMaze).
 > Pan and Zoom
 > Track &c.
 
-Start to put views into child windows. (Switch between floating and docked, somehow).
+Start to put views into child windows.
+> Switch between floating and docked, somehow.
 
 Increase map zoom limit (is 18, need 21).
 Colour track.
@@ -28,12 +31,11 @@ Drag on map.
 > We should have control over mouse actions, before the map gets them (see mapwidget-impl.rkt)
 > Likewaise, we can probably make a better marker.
 
-See if we can promote child windows into top level.
-
-Need: equivalent of elm-geometry, some of which is in Pict3D.
+Need: equivalent of elm-geometry, some of which is in Pict3D. (not comparable)
 
 Most graphic attributes to live at window level (e.g. terrain).
 
 # DONE
 
 GPX -> Map, zoomed, centred, "orange" marker.
+Basic 3D view, semblance of zooming.
