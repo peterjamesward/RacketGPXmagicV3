@@ -13,20 +13,17 @@
            [my-pict (sphere origin 1/2)]
            [dragging #f]
            [zoom 12])
-    (define/override (on-event mouse-event) (lambda (mouse-event) #f))
 
+    (define/override (on-event mouse-event)
+      (let ([parent (send this get-parent)])
+        (send parent set-label "MOUSEY")))
+      ; Pan & rotate here.
+;      (lambda (mouse-event) #f))
 
     (define/override (on-char event)
       ; Because mouse wheel comes in like this.
-      (lambda (key-event)
-        (let ([which-key (send event get-key-code)])
-          (cond
-            [(equal? which-key 'wheel-up) (set! zoom (min 21 (+ 1 zoom)))]
-            [(equal? which-key 'wheel-down) (set! zoom (max 1 (- zoom 1)))]
-            [(equal? which-key 'shift) (set! zoom (min 21 (+ 1 zoom)))]
-            [(equal? which-key 'rshift) (set! zoom (max 1 (- zoom 1)))])
-          (set! my-camera (basis 'camera (point-at (* 10 zoom) (* 10 zoom) (* 5 zoom) origin)))
-          (send this set-pict3d (combine my-pict my-camera)))))
+      (let ([parent (send this get-parent)])
+        (send parent set-label "KEYBOARD")))
 
     (define/public (update-picture track)
       (let ([new-pict (euclidean->picture track)])
