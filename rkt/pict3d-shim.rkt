@@ -6,10 +6,11 @@
 (provide show-3d
          my-3d)
 
+
 ; Derive a new canvas (a drawing window) class to handle events
 (define my-canvas%
   (class pict3d-canvas%
-    (field [my-camera (basis 'camera (point-at (pos 500 500 40) origin))]
+    (field [my-camera (basis 'camera (point-at (pos 0 -1000 40) origin))]
            [my-pict (sphere origin 1/2)]
            [camera-distance 1000] ; metres away from whatever the focal point is (default to origin)
            [camera-azimuth 180] ; where the camera is relative to the origin
@@ -17,25 +18,33 @@
            [dragging #f]
            [zoom 12])
 
+    (define/public (camera-from-azimuth-elevation)
+      (let* ([direction (angles->dir camera-azimuth camera-elevation)]
+             [pos-vector (dir-scale direction camera-distance)]
+             [camera-position (pos+ origin pos-vector)]
+             [new-camera (basis 'camera (point-at camera-position origin))])
+        (set! my-camera new-camera)
+        (send this set-pict3d (combine my-pict my-camera))))
+
     (define/override (on-event mouse-event)
-      (let ([parent (send this get-parent)])
-        (send parent set-label "MOUSEY")))
-      ; Pan & rotate here.
-;      (lambda (mouse-event) #f))
+      (let ([parent (send this get-parent)]) (send parent set-label "MOUSEY")))
+    ; Pan & rotate here.
+    ;      (lambda (mouse-event) #f))
 
     (define/override (on-char event)
       ; Because mouse wheel comes in like this.
-      (let ([parent (send this get-parent)]
-            [which-key (send event get-key-code)])
-        (cond [(equal? which-key 'wheel-up)   (send parent set-label "zoom out")]
-              [(equal? which-key 'wheel-down)   (send parent set-label "zoom in")]
-              [#t (send parent set-label "other")])))
+      (let ([parent (send this get-parent)] [which-key (send event get-key-code)])
+        (cond
+          [(equal? which-key 'wheel-up) (set! camera-distance (+ camera-distance 100))]
+          [(equal? which-key 'wheel-down) (set! camera-distance (- camera-distance 100))]
+          [#t (send parent set-label "other")])
+        (send this camera-from-azimuth-elevation)))
 
     (define/public (update-picture track)
       (let ([new-pict (euclidean->picture track)])
         (set! my-pict new-pict)
         (send this set-pict3d (combine new-pict my-camera))))
-    
+
     (super-new)))
 
 (define (my-3d container)
