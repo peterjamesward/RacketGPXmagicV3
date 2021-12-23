@@ -11,6 +11,9 @@
   (class pict3d-canvas%
     (field [my-camera (basis 'camera (point-at (pos 500 500 40) origin))]
            [my-pict (sphere origin 1/2)]
+           [camera-distance 1000] ; metres away from whatever the focal point is (default to origin)
+           [camera-azimuth 180] ; where the camera is relative to the origin
+           [camera-elevation 30] ; from XY plane
            [dragging #f]
            [zoom 12])
 
@@ -22,13 +25,17 @@
 
     (define/override (on-char event)
       ; Because mouse wheel comes in like this.
-      (let ([parent (send this get-parent)])
-        (send parent set-label "KEYBOARD")))
+      (let ([parent (send this get-parent)]
+            [which-key (send event get-key-code)])
+        (cond [(equal? which-key 'wheel-up)   (send parent set-label "zoom out")]
+              [(equal? which-key 'wheel-down)   (send parent set-label "zoom in")]
+              [#t (send parent set-label "other")])))
 
     (define/public (update-picture track)
       (let ([new-pict (euclidean->picture track)])
         (set! my-pict new-pict)
         (send this set-pict3d (combine new-pict my-camera))))
+    
     (super-new)))
 
 (define (my-3d container)
