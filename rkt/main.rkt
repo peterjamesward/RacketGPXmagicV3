@@ -20,11 +20,17 @@
 ; The Map, please
 (define my-map (new map-widget% [parent map-frame]))
 
+; Mouse events on 3D
+(define (my-event-handler some-event)
+  #f)
+
 ; The 3D view
 (define my-3d
-  (new pict3d-canvas%
-       [parent opengl-frame]
-       [pict3d (combine (sphere origin 1/2) (light (pos 0 1 1)))]))
+  (new (class pict3d-canvas%
+         (define/override (on-event any-event) (my-event-handler any-event))
+         (super-new [parent opengl-frame]
+                    [pict3d (combine (sphere origin 1/2) (light (pos 0 1 1)))]))))
+
 
 (define global-track #f)
 
