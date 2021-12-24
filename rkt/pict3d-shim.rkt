@@ -73,7 +73,13 @@
     (define/public (update-picture track)
       (let ([new-pict (euclidean->picture track)])
         (set! my-pict new-pict)
-        (send this set-pict3d (combine new-pict my-camera))))
+        (send this
+              set-pict3d
+              (parameterize ([current-pict3d-add-sunlight? #t]
+                             [current-pict3d-add-indicators? #t]
+                             [current-pict3d-background (rgba "blue" 0)]
+                             [current-pict3d-fov 45])
+                (combine new-pict my-camera)))))
 
     (super-new)))
 
@@ -90,11 +96,8 @@
    1.0))
 
 (define (euclidean->picture track)
-  (let ([point-cloud (map show-point (track-info-euclidean-trackpoints track))])
-    (parameterize ([current-pict3d-add-sunlight? #t]
-                   [current-pict3d-add-indicators? #t]
-                   [current-pict3d-background (rgba "blue" 128)])
-      point-cloud)))
+  (map show-point (track-info-euclidean-trackpoints track)))
+
 
 
 (define (show-3d widget track)

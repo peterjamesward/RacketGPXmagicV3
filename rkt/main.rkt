@@ -27,7 +27,6 @@
 ; Assuming only one track open, for now.
 (define global-track #f)
 
-
 (define (read-gpx-file button event)
   (define gpx-file-path
     (get-file "Read GPX file" map-frame #f #f "gpx" '() '(("GPX Files" "*.gpx") ("Any" "*.*"))))
